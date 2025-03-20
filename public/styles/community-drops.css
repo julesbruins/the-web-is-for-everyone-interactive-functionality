@@ -1,0 +1,84 @@
+body {
+    background-color: var(--background-color-lighter);
+}
+
+header {
+    margin: 2rem;
+    h1 {
+        margin-bottom: .5rem;
+    }
+    p {
+        color: rgba(166, 166, 166, 1);
+        margin-bottom: 1.5rem;
+    }
+    span {
+        font-weight: 700;
+        color: var(--text-color);
+    }
+    a {
+        position: absolute;
+        top: 7%;
+        left: 3%;
+    }
+    
+}
+
+main {
+    background-color: var(--background-color);
+    padding: 2.5rem 2rem 2rem 2rem;
+    h2 {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 2.5rem;
+    }
+}
+.drops {
+    background-color: var(--background-color-lighter);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+
+form {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--background-color);
+    padding: 2rem;
+    
+    label {
+        font-family: var(--secondary-font);
+        color: var(--text-color);
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 1rem;
+        gap: .5rem;
+    }
+    input {
+        background-color: var(--background-color-lighter);
+        border: none;
+        border-radius: var(--border-radius);
+    }
+
+    button {
+        border: var(--border) ;
+        border-radius: var(--border-radius);
+        text-decoration: none;
+        padding: 4px 16px;
+        width: fit-content;
+        background-color: var(--background-color-lighter);
+        color: var(--text-color);
+        font-family: var(--secondary-font);
+
+        &:hover {
+            background-color: var(--background-color);
+        }
+    }
+}
+
+input[name="community_drop"] {
+    height: 10em;
+}
+input::placeholder {
+    padding: 1rem;
+}

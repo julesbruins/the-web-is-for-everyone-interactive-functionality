@@ -1,15 +1,31 @@
 // Importeer het npm package Express (uit de door npm aangemaakte node_modules map)
 // Deze package is geïnstalleerd via `npm install`, en staat als 'dependency' in package.json
-import express from 'express'
+import express, { request } from 'express'
 
 // Importeer de Liquid package (ook als dependency via npm geïnstalleerd)
 import { Liquid } from 'liquidjs';
 
+
+console.log('Hieronder moet je waarschijnlijk nog wat veranderen')
+// Doe een fetch naar de data die je nodig hebt
+const taskResponse = await fetch('https://fdnd-agency.directus.app/items/dropandheal_task/')            // Je haalt de API op
+const excerciseResponse = await fetch('https://fdnd-agency.directus.app/items/dropandheal_exercise')    // Je haalt de API op
+const messageResponse = await fetch('https://fdnd-agency.directus.app/items/dropandheal_messages')
+
+// Lees van de response van die fetch het JSON object in, waar we iets mee kunnen doen
+const taskResponseJSON = await taskResponse.json()                                                      // Je zet de data om in JSON
+const excerciseResponseJSON = await excerciseResponse.json()                                            // Je zet de data om in JSON
+const messageResponseJSON = await messageResponse.json()
+
+
+// Controleer eventueel de data in je console
+// (Let op: dit is _niet_ de console van je browser, maar van NodeJS, in je terminal)
+// console.log(apiResponseJSON)
+
+
 // Maak een nieuwe Express applicatie aan, waarin we de server configureren
 const app = express()
-
-// Maak werken met data uit formulieren iets prettiger
-app.use(express.urlencoded({extended: true}))
+app.use(express.urlencoded({ extended: true }));
 
 // Gebruik de map 'public' voor statische bestanden (resources zoals CSS, JavaScript, afbeeldingen en fonts)
 // Bestanden in deze map kunnen dus door de browser gebruikt worden
@@ -17,58 +33,81 @@ app.use(express.static('public'))
 
 // Stel Liquid in als 'view engine'
 const engine = new Liquid();
-app.engine('liquid', engine.express());
+app.engine('liquid', engine.express()); 
 
 // Stel de map met Liquid templates in
 // Let op: de browser kan deze bestanden niet rechtstreeks laden (zoals voorheen met HTML bestanden)
 app.set('views', './views')
 
-
-console.log('Let op: Er zijn nog geen routes. Voeg hier dus eerst jouw GET en POST routes toe.')
-
-/*
-// Zie https://expressjs.com/en/5x/api.html#app.get.method over app.get()
-app.get(…, async function (request, response) {
-  
-  // Zie https://expressjs.com/en/5x/api.html#res.render over response.render()
-  response.render(…)
+// Maak een GET route voor de index (meestal doe je dit in de root, als /)
+app.get('/', async function (request, response) {               // Je haalt de root op
+   // Render index.liquid uit de Views map
+   // Geef hier eventueel data aan mee
+   response.render('index.liquid', {task: taskResponseJSON.data })  
 })
-*/
 
-/*
-// Zie https://expressjs.com/en/5x/api.html#app.post.method over app.post()
-app.post(…, async function (request, response) {
+app.get('/task/:id', async function (request, response) {       // Je haalt de id op die uit de filter (<a> van task.lquid) komt. 
+  const task = request.params.id;                               // Je maakt een variabele aan voor de opgevraagde id
+  const taskResponse = await fetch(`https://fdnd-agency.directus.app/items/dropandheal_task/?fields=*.*&filter={"id":"${task}"}&limit=1`) // De variable kan je in de link terug laten komen + door de fields komen taken en opdrachten samen in een API.
+  const taskResponseJSON = await taskResponse.json()            // Je zet de data om in JSON
 
-  // In request.body zitten alle formuliervelden die een `name` attribuut hebben in je HTML
-  console.log(request.body)
+  response.render('task.liquid', {task: taskResponseJSON.data?.[0] || [] })   // Je rendert de pagina op task.liquid. De vraagteken en || staan ervoor dat als de data leeg is de pagina alsnog geladen wordt.
+})
 
-  // Via een fetch() naar Directus vullen we nieuwe gegevens in
+app.get('/exercise/:id', async function (request, response) {
+  const exercise = request.params.id;
+  const exerciseResponse = await fetch(`https://fdnd-agency.directus.app/items/dropandheal_exercise/?fields=*.*&filter={"id":"${exercise}"}&limit=1`)
+  const exerciseResponseJSON = await exerciseResponse.json()
 
-  // Zie https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch over fetch()
-  // Zie https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify over JSON.stringify()
-  // Zie https://docs.directus.io/reference/items.html#create-an-item over het toevoegen van gegevens in Directus
-  // Zie https://docs.directus.io/reference/items.html#update-an-item over het veranderen van gegevens in Directus
-  await fetch(…, {
-    method: …,
-    body: JSON.stringify(…),
+  const messagesResponse = await fetch(`https://fdnd-agency.directus.app/items/dropandheal_messages?filter={"_and":[{"exercise":{"_eq":"${request.params.id}"}},{"from":{"_contains":"Jules_"}}]}`)
+  const messagesResponseJSON = await messagesResponse.json()
+
+  response.render('exercise.liquid', {exercise: exerciseResponseJSON.data?.[0] || [], messagesLength: messagesResponseJSON.data.length })
+})
+
+app.get('/community-drops/:id', async function (request, response) {
+  const messagesResponse = await fetch(`https://fdnd-agency.directus.app/items/dropandheal_messages?filter={"_and":[{"exercise":{"_eq":"${request.params.id}"}},{"from":{"_contains":"Jules_"}}]}`)
+  const messagesResponseJSON = await messagesResponse.json()
+
+  response.render('community-drops.liquid', { id: request.params.id, messages: messagesResponseJSON.data })
+})
+
+app.post('/community-drop/:id', async function (request, response) {
+  await fetch('https://fdnd-agency.directus.app/items/dropandheal_messages', {      // Je stuurt de message naar deze API
+    method: 'POST',                                                                 // Je gebruikt de POST methode
+    body: JSON.stringify({
+      from: `Jules_${request.body.name}`,                                           // Ik gebruikt uit database from, exercise & text (Jules_ zorgt ervoor dat alleen mijn messages gebruikt worden)
+      exercise: request.params.id,                                                  // exercise zorgt ervoor dat bij juiste opdracht bijbehorende drops komen dmv request.params.id
+      text: request.body.community_drop                                             // text zorgt ervoor dat in het 'text' veld in database de geposte content komt
+    }),
     headers: {
-      'Content-Type': 'application/json;charset=UTF-8'
+      'Content-Type': 'application/json',
     }
   });
 
-  // Redirect de gebruiker daarna naar een logische volgende stap
-  // Zie https://expressjs.com/en/5x/api.html#res.redirect over response.redirect()
-  response.redirect(303, …)
-})
-*/
+  response.redirect(303, `/community-drops/${request.params.id}`)                   // zorgt ervoor dat je na de post succesvol doorgelijdt wordt naar de pagina waar de berichten voor die specifieke opdracht worden weergegeven.
+})  
 
+// Maak een POST route voor de index; hiermee kun je bijvoorbeeld formulieren afvangen
+// Hier doen we nu nog niets mee, maar je kunt er mee spelen als je wilt
+app.post('/', async function (request, response) {
+  // Je zou hier data kunnen opslaan, of veranderen, of wat je maar wilt
+
+  // Er is nog geen afhandeling van een POST, dus stuur de bezoeker terug naar /
+  response.redirect(303, '/')
+})
 
 // Stel het poortnummer in waar Express op moet gaan luisteren
-// Lokaal is dit poort 8000; als deze applicatie ergens gehost wordt, waarschijnlijk poort 80
+// Lokaal is dit poort 8000, als dit ergens gehost wordt, is het waarschijnlijk poort 80
 app.set('port', process.env.PORT || 8000)
 
-// Start Express op, gebruik daarbij het zojuist ingestelde poortnummer op
+// Start Express op, haal daarbij het zojuist ingestelde poortnummer op
 app.listen(app.get('port'), function () {
-  // Toon een bericht in de console
-  console.log(`Daarna kun je via http://localhost:${app.get('port')}/ jouw interactieve website bekijken.\n\nThe Web is for Everyone. Maak mooie dingen 🙂`)
+  // Toon een bericht in de console en geef het poortnummer door
+  console.log(`Application started on http://localhost:${app.get('port')}`)
 })
+
+app.use((request, respond, next) => {
+  respond.render('404.liquid')
+})
+
