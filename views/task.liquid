@@ -40,7 +40,7 @@
             
             <div class="bottom-grid">
                 <h3>{{ excercise.title }}</h3>
-                <a class="btn" href="/community-drops/{{exercise.id}}"><img src="../assets/community-drops.png" alt="">{{ messagesLength }} community drops</a>
+                <a class="btn" href="/community-drops/{{excercise.id}}"><img src="../assets/community-drops.png" alt="">{{ messagesLength }} community drops</a>
                 <a class="start-btn" href="/exercise/{{excercise.id}}">start oefening</a>
                 <div class="flex-container">
                     <p class="btn">
@@ -63,4 +63,4 @@
 
 {% comment %} <footer></footer> {% endcomment %}
 
-</body>
+{% render 'partials/foot.liquid' %}

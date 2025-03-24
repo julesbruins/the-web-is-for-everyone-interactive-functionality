@@ -159,7 +159,7 @@ a, .btn {
         }
     }
 
-    /* display: none; */
+    display: none;
 }
 
 .active {

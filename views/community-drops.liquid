@@ -1,5 +1,6 @@
 <link rel="stylesheet" href="/styles/styleguide.css">
 <link rel="stylesheet" href="/styles/community-drops.css">
+<script src="/scripteen.js"></script>
 
 <body>
     
@@ -20,14 +21,24 @@
         <article class="drops">
             <h3>{{ message.from | replace: "Jules_", "" }}</h3>
             <p>{{ message.text }}</p>
+            <p>Op {{ message.date_created | date: "%-d %B" }}</p>
         </article> 
     {% endfor %}
+
+    <a href="/post-page/{{id}}">PLAATSEN</a>
 </main>   
                     
-<form method="POST" action="/community-drop/{{ id }}">
+{% comment %} <form method="POST" action="/community-drop/{{ id }}">
     <label for="">Naam<input type="text" name="name" placeholder="Vul hier je naam in." required></label>
     <label for="">Wat heeft de oefening jou gebracht?<input type="text" name="community_drop" placeholder="Deel hier jouw ervaring." required></label>
     <button type="submit">plaats bericht</button>
-</form>
+</form> {% endcomment %}
+
+
+{% if succes_message %}
+    <div class="succes-message">
+        <p>{{ succes_message }}</p>
+    </div>
+{% endif %}
 
 </body>

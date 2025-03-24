@@ -51,7 +51,7 @@ app.get('/task/:id', async function (request, response) {       // Je haalt de i
   const taskResponse = await fetch(`https://fdnd-agency.directus.app/items/dropandheal_task/?fields=*.*&filter={"id":"${task}"}&limit=1`) // De variable kan je in de link terug laten komen + door de fields komen taken en opdrachten samen in een API.
   const taskResponseJSON = await taskResponse.json()            // Je zet de data om in JSON
 
-  response.render('task.liquid', {task: taskResponseJSON.data?.[0] || [] })   // Je rendert de pagina op task.liquid. De vraagteken en || staan ervoor dat als de data leeg is de pagina alsnog geladen wordt.
+  response.render('task.liquid', {task: taskResponseJSON.data?.[0] || [] }) 
 })
 
 app.get('/exercise/:id', async function (request, response) {
@@ -65,11 +65,22 @@ app.get('/exercise/:id', async function (request, response) {
   response.render('exercise.liquid', {exercise: exerciseResponseJSON.data?.[0] || [], messagesLength: messagesResponseJSON.data.length })
 })
 
+
+
+app.get('/post-page/:id', async function (request, response) {
+  const postResponse = await fetch(`https://fdnd-agency.directus.app/items/dropandheal_messages?filter={"_and":[{"exercise":{"_eq":"${request.params.id}"}},{"from":{"_contains":"Jules_"}}]}`)
+  const postResponseJSON = await postResponse.json()
+  
+  
+  response.render('post-page.liquid', { id: request.params.id, messages: postResponseJSON.data, succes_message: request.query.succes })
+})
+
 app.get('/community-drops/:id', async function (request, response) {
   const messagesResponse = await fetch(`https://fdnd-agency.directus.app/items/dropandheal_messages?filter={"_and":[{"exercise":{"_eq":"${request.params.id}"}},{"from":{"_contains":"Jules_"}}]}`)
   const messagesResponseJSON = await messagesResponse.json()
 
-  response.render('community-drops.liquid', { id: request.params.id, messages: messagesResponseJSON.data })
+
+  response.render('community-drops.liquid', { id: request.params.id, messages: messagesResponseJSON.data, succes_message: request.query.succes })
 })
 
 app.post('/community-drop/:id', async function (request, response) {
@@ -85,7 +96,8 @@ app.post('/community-drop/:id', async function (request, response) {
     }
   });
 
-  response.redirect(303, `/community-drops/${request.params.id}`)                   // zorgt ervoor dat je na de post succesvol doorgelijdt wordt naar de pagina waar de berichten voor die specifieke opdracht worden weergegeven.
+
+  response.redirect(303, `/community-drops/${request.params.id}/?succes=Toegevoegd aan drops`)         // zorgt ervoor dat je na de post succesvol doorgelijdt wordt naar de pagina waar de berichten voor die specifieke opdracht worden weergegeven.
 })  
 
 // Maak een POST route voor de index; hiermee kun je bijvoorbeeld formulieren afvangen
