@@ -1,7 +1,8 @@
 {% render 'partials/head.liquid' %}
+<link rel="stylesheet" href="/styles/post-page.css">
 
 <form method="POST" action="/community-drop/{{ id }}">
-    <label for="">naam:<input type="text" name="name" required></label>
-    <label for="">community drop:<input type="text" name="community_drop" required></label>
-    <button type="submit">plaats bericht</button>
+    <label for="">Naam:<input type="text" name="name" required></label>
+    <label for="">Wat heeft de opdracht jou gebracht?<input type="text" name="community_drop" required></label>
+    <button type="submit" class="post-btn">Plaats bericht</button>
 </form>

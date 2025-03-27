@@ -19,6 +19,9 @@ header {
         position: absolute;
         top: 7%;
         left: 3%;
+        &:hover {
+            transform: scale(1.2);
+        }
     }
     
 }
@@ -39,62 +42,3 @@ main {
     margin-bottom: 1rem;
 }
 
-
-form {
-    display: flex;
-    flex-direction: column;
-    background-color: var(--background-color);
-    padding: 2rem;
-    
-    label {
-        font-family: var(--secondary-font);
-        color: var(--text-color);
-        display: flex;
-        flex-direction: column;
-        margin-bottom: 1rem;
-        gap: .5rem;
-    }
-    input {
-        background-color: var(--background-color-lighter);
-        border: none;
-        border-radius: var(--border-radius);
-    }
-
-    button {
-        border: var(--border) ;
-        border-radius: var(--border-radius);
-        text-decoration: none;
-        padding: 4px 16px;
-        width: fit-content;
-        background-color: var(--background-color-lighter);
-        color: var(--text-color);
-        font-family: var(--secondary-font);
-
-        &:hover {
-            background-color: var(--background-color);
-        }
-    }
-}
-
-input[name="community_drop"] {
-    height: 10em;
-}
-input::placeholder {
-    padding: 1rem;
-}
-
-.succes-message {
-    background-color: red;
-    position: fixed;
-    bottom: 10vh;
-    left: 2vw;
-    opacity: 0;
-    transition: opacity .7s ease;
-    &.show {
-        opacity: 1;
-    }
-    &.fade-out {
-        display: none;
-        opacity: 0;
-    }
-}
