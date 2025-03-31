@@ -110,3 +110,7 @@ p, a {
 .hidden {
     display: none;
 }
+
+a {
+    cursor: pointer;
+}

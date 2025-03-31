@@ -20,6 +20,7 @@ header {
         border: none;
         justify-self: end;
     }
+
     p {
         font-size: .625rem;
     }
@@ -29,12 +30,17 @@ section {
     display: flex;
     flex-direction: column;
 
-    .task-img, h2, p.margin {
+    .task-img,
+    h2,
+    p.margin {
         margin: auto;
     }
-    .task-img, p.margin {
+
+    .task-img,
+    p.margin {
         margin-bottom: 3rem;
     }
+
     .task-img {
         margin-top: 3rem;
     }
@@ -42,62 +48,79 @@ section {
     &.intro {
         position: relative;
 
-        background-image: 
-            radial-gradient(
-                circle at -10em 50%,
-                var(--accent-color), 
-                transparent 20em
-            ),
-            radial-gradient(
-                circle at calc(100% + 10em) 50%,
-                var(--accent-color), 
-                transparent 20em
-            );
+        background-image:
+            radial-gradient(circle at -10em 50%,
+                var(--accent-color),
+                transparent 20em),
+            radial-gradient(circle at calc(100% + 10em) 50%,
+                var(--accent-color),
+                transparent 20em);
     }
+}
 
 
-    &.exercises {
-        background-color: var(--background-color-lighter);
+.exercises {
+    background-color: var(--background-color-lighter);
+    border-radius: var(--border-radius);
+    padding: 1.25rem;
+    align-items: center;
+
+    article {
+        border: var(--border);
         border-radius: var(--border-radius);
-        padding: 1.25rem;
+        margin-bottom: 1rem;
+        width: 100%;
 
-        article {
-            border: var(--border);
-            border-radius: var(--border-radius);
-            margin-bottom: 1rem;
-            
+        display: grid;
+        grid-template-rows: 50% max-content;
 
-            display: grid;
-            grid-template-rows: 50% max-content;
+        container-type: inline-size;
+        container-name: --exercise-card;
 
-            .bottom-grid {
-                padding: 2rem 1rem 1rem;
-                display: flex;
-                flex-direction: column;
-                gap: 5px;
-                position: relative;
-            }
+        .bottom-grid {
+            padding: 2rem 1rem 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            position: relative;
+        }
 
-            .exercise-img {
-                width: 100%;
-                height: 100%;
-                border-radius: var(--border-radius) var(--border-radius) 0 0;
-            }
+        .exercise-img {
+            width: 100%;
+            height: 100%;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+        }
 
         .flex-container {
             display: flex;
             gap: 5px;
-            }
         }
     }
-}
 
-a, .btn {
-    border: var(--border) ;
+    @media (width > 38rem) {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+    }
+    @container --exercise-card (width > 24em) {
+
+        article {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr;
+        }
+    }
+}   
+
+a,
+.btn {
+    border: var(--border);
     border-radius: var(--border-radius);
     text-decoration: none;
     padding: 4px 16px;
     width: fit-content;
+    cursor: pointer;
+
     img {
         margin-right: .5rem;
     }
@@ -121,33 +144,29 @@ a, .btn {
     top: 93px;
     background-color: rgba(166, 166, 166, 0.4);
     border-radius: 0px 7px 7px 0px;
-  }
-  
-  .progress-done {
+}
+
+.progress-done {
     width: 56.42px;
     height: 2px;
     left: 20px;
     top: 93px;
-  
+
     background-color: var(--button-color);
     border-radius: 7px 0px 0px 7px;
-  }
+}
 
 
 
 .nav-container {
-        display: flex;      
-        flex-direction: row;
-        height: fit-content;
-        gap: .5rem;
-        background-color: var(--background-color);
-        border-radius: 0 0 var(--border-radius) var(--border-radius);
-        padding: 1rem;
-    
     .nav-links {
         border: none;
         text-align: center;
         padding: 0;
+
+        display: flex;
+        flex-direction: column;
+
 
         img {
             width: 4rem;
@@ -156,6 +175,7 @@ a, .btn {
             object-fit: cover;
             border-radius: .75rem;
             margin: 0;
+            align-self: center;
         }
     }
 
@@ -163,5 +183,18 @@ a, .btn {
 }
 
 .active {
-    display: block;
+    display: flex;
+    flex-direction: row;
+    height: fit-content;
+    gap: .5rem;
+    background-color: var(--background-color);
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
+    padding: 1rem;
 }
+
+.open-button {
+    &:hover {
+        transform: scale(1.3);
+    }
+}
+
