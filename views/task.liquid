@@ -36,7 +36,8 @@
         {% comment %} hij laadt alles in wat in de database staat. {% endcomment %}
         {% for excercise in task.exercise %}
         <article>
-            <img src="https://fdnd-agency.directus.app/assets/{{ excercise.image }}" alt="" class="exercise-img">
+        <div class="container-card">   
+        <img src="https://fdnd-agency.directus.app/assets/{{ excercise.image }}" alt="" class="exercise-img">
             
             <div class="bottom-grid">
                 <h3>{{ excercise.title }}</h3>
@@ -55,6 +56,7 @@
                     3 tips</p>
                 </div>
             </div>
+        </div>
         </article>
         {% endfor %}
 

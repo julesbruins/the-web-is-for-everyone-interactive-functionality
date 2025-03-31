@@ -66,16 +66,19 @@ section {
     align-items: center;
 
     article {
-        border: var(--border);
-        border-radius: var(--border-radius);
-        margin-bottom: 1rem;
         width: 100%;
-
-        display: grid;
-        grid-template-rows: 50% max-content;
-
         container-type: inline-size;
         container-name: --exercise-card;
+        
+        
+        .container-card {
+            border: var(--border);
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+
+            display: grid;
+            grid-template-rows: 50% max-content;
+        }
 
         .bottom-grid {
             padding: 2rem 1rem 1rem;
@@ -97,18 +100,26 @@ section {
         }
     }
 
+    @container --exercise-card (width > 25em) {
+        div.container-card {
+            display: grid;
+            grid-template-columns: 40% 1fr;
+            grid-template-rows: 1fr;
+            margin-bottom: 2rem;
+            
+            img {
+                border-radius: var(--border-radius) 0 0 var(--border-radius);
+            }     
+        }
+    }
+
     @media (width > 38rem) {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 1.5rem;
     }
-    @container --exercise-card (width > 24em) {
-
-        article {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: 1fr;
-        }
+    @media (width > 54rem) {
+        grid-template-columns: 1fr 1fr 1fr;
     }
 }   
 
