@@ -14,10 +14,10 @@
 
 <main class="theme-{{ task.theme }}">
     <div class="nav-container">
-            <a class="nav-links xs" href="/task/1"><img src="../assets/blue.png" alt="">Het verlies aanvaarden</a>
-            <a class="nav-links xs" href="/task/2"><img src="../assets/red.png" alt="">De pijn doorvoelen</a>
-            <a class="nav-links xs" href="/task/3"><img src="../assets/green.png" alt="">Verder in verandering</a>
-            <a class="nav-links xs" href="/task/4"><img src="../assets/purple.png" alt="">Emotioneel verder gaan</a>
+            <a class="nav-links xs" href="/task/1"><img src="../assets/blue.png" alt=""><p>Het verlies aanvaarden</p></a>
+            <a class="nav-links xs" href="/task/2"><img src="../assets/red.png" alt=""><p>De pijn doorvoelen</p></a>
+            <a class="nav-links xs" href="/task/3"><img src="../assets/green.png" alt=""><p>Verder in verandering</p></a>
+            <a class="nav-links xs" href="/task/4"><img src="../assets/purple.png" alt=""><p>Emotioneel verder gaan</p></a>
             
     </div>
 
@@ -27,9 +27,12 @@
         <div class="task-img">
             <img src="../assets/{{ task.theme }}.png" alt="">
         </div>
-        <h2 class="md">Rouwstappen van de dag</h2>
-        <p class="margin">3 Oefeningen open voor vandaag</p>
+        <div class="flex-container">
+            <h2 class="md">Rouwstappen van de dag</h2>
+            <p class="margin">3 Oefeningen open voor vandaag</p>
+        </div>
     </section>
+    
     <section class="exercises"> 
         <h2 class="hidden">exercises</h2> 
 
