@@ -60,7 +60,7 @@ section {
         @media (width > 54rem) {
             display: grid;
             gap: 1rem;
-            padding: 5rem 0;
+            padding: 8rem 0;
             grid-template-columns: min-content max-content;
             justify-content: center;
             align-items: center;
