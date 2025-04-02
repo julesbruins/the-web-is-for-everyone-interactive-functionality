@@ -19,6 +19,7 @@ Wat al stond was een website met 4 verschillende rouwtaken, waarvan elke overzic
 <!-- Bij Beschrijving staat kort beschreven wat voor project het is en wat je hebt gemaakt -->
 <!-- Voeg een mooie poster visual of video toe 📸 -->
 <!-- Voeg een link toe naar GitHub Pages 🌐-->
+[De live website om zelf te bekijken!](https://the-web-is-for-everyone-interactive-mmsf.onrender.com)
 
 ## Gebruik
 <!-- Bij Gebruik staat de user story, hoe het werkt en wat je er mee kan. -->
