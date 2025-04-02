@@ -12,11 +12,12 @@ form {
         margin-bottom: 1rem;
         gap: .5rem;
     }
-    input {
+    input, textarea {
         background-color: var(--background-color-lighter);
         border: none;
-        border-radius: var(--border-radius);
+        border-radius: 1rem;
         max-width: 75ch;
+        padding: .5rem;
     }
 
     button {
@@ -33,13 +34,6 @@ form {
             background-color: var(--background-color);
         }
     }
-}
-
-input[name="community_drop"] {
-    height: 10em;
-}
-input::placeholder {
-    padding: 1rem;
 }
 
 .succes-message {
@@ -61,3 +55,8 @@ input::placeholder {
 /* .post-btn {
     background-color: var(--button-color);
 } */
+
+input[type="text"], textarea {
+    color: var(--text-color);
+    white-space: normal;
+}

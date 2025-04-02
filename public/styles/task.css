@@ -57,7 +57,7 @@ section {
                 var(--accent-color),
                 transparent 30em);
 
-        @media (width > 54rem) {
+        @media (width > 60rem) {
             display: grid;
             gap: 1rem;
             padding: 8rem 0;
