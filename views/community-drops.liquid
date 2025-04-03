@@ -3,7 +3,8 @@
     <link rel="stylesheet" href="/styles/styleguide.css">
     <link rel="stylesheet" href="/styles/community-drops.css">
     <script src="/scripteen.js"></script>
-    <title>drop & heal - community drops</title>
+    <title>drop & heal - community drops
+    </title>
 </head>
 
 
@@ -27,6 +28,8 @@
                 <p>{{ message.text }}</p>
                 <p>Op {{ message.date_created | date: "%-d %B" }}</p>
             </article> 
+        {% else %}
+            <p class="empty-state">Er zijn nog geen community drops voor deze opdracht, deel jouw ervaring als eerst!</p>
         {% endfor %}
 
         <a href="/post-page/{{id}}">Plaats bericht</a>

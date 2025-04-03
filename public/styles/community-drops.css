@@ -71,3 +71,7 @@ main {
     max-width: 75ch;
 }
 
+
+.empty-state {
+    margin-bottom: 2.5rem;
+}
